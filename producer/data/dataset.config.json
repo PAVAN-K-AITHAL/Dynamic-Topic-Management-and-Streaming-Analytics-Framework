@@ -1,0 +1,9 @@
+{
+  "topics": {
+    "topic-cpu": ["ts", "server_id", "cpu_pct"],
+    "topic-mem": ["ts", "server_id", "mem_pct"],
+    "topic-net": ["ts", "server_id", "net_in", "net_out"],
+    "topic-disk": ["ts", "server_id", "disk_io"]
+  },
+  "description": "Server metrics dataset: CPU, Memory, Network, Disk"
+}
