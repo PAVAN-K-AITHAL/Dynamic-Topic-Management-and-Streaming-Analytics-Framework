@@ -6,8 +6,10 @@ class IngestThread:
    
 
     def __init__(self, watcher, out_q,
-                 datasets_dir="/home/pes1ug23cs420/173_Projject2_BD/producer/data",
+                 datasets_dir=None,
                  poll_interval=3, send_interval=1, loop=True):
+        if datasets_dir is None:
+            datasets_dir = os.path.join(os.path.dirname(__file__), "data")
         self.watcher = watcher
         self.out_q = out_q
         self.datasets_dir = datasets_dir

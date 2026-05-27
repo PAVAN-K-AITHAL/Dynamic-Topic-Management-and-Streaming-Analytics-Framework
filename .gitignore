@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Data files (too large for GitHub)
+producer/data/creditcard.csv
+producer/data/dataset.csv
+*.db
+
+# Spark checkpoints
+data/spark_checkpoints/
+
+# Environment
+.env
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+package-lock.json
+
+# ML artifacts (tracked by MLflow, not git)
+ml_models/trained_models/*.joblib
+ml_models/trained_models/*.pt
+ml_models/trained_models/*.pkl
+mlruns/
+
+# Logs
+logs/
+*.log
+
+# Docker volumes
+docker/*_data/

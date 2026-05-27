@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
-import threading, queue, signal, time
+import threading, queue, signal, time, os, sys
+
+# ── Import centralized config ────────────────────────────────────────
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from config.settings import KAFKA_BROKER, ADMIN_URL, DATA_DIR
+
 from topic_watcher import TopicWatcherThread
 from ingest_thread import IngestThread
 from publisher_thread import PublisherThread
 
-BROKER     = "10.147.19.93:9092"
-ADMIN_URL  = "http://10.147.19.93:5000/topics"
-DATA_DIR   = "/home/pes1ug23cs420/173_Project2_BD/producer/data"
+BROKER     = KAFKA_BROKER
+ADMIN_TOPICS_URL = f"{ADMIN_URL}/topics"
+DATA_DIR_STR = str(DATA_DIR)
 
 def main():
     q = queue.Queue(maxsize=5000)
-    watcher   = TopicWatcherThread(broker=BROKER, admin_url=ADMIN_URL, poll_interval=5)
-    ingestor  = IngestThread(watcher=watcher, out_q=q, datasets_dir=DATA_DIR,
+    watcher   = TopicWatcherThread(broker=BROKER, admin_url=ADMIN_TOPICS_URL, poll_interval=5)
+    ingestor  = IngestThread(watcher=watcher, out_q=q, datasets_dir=DATA_DIR_STR,
                              poll_interval=3, send_interval=1, loop=True)
     publisher = PublisherThread(broker=BROKER, out_q=q)
 
@@ -20,6 +25,9 @@ def main():
     t3 = threading.Thread(target=publisher.run, daemon=True)
 
     print("[Main] Starting Producer Threads...")
+    print(f"[Main] Broker: {BROKER}")
+    print(f"[Main] Admin URL: {ADMIN_TOPICS_URL}")
+    print(f"[Main] Data Dir: {DATA_DIR_STR}")
     t1.start(); t2.start(); t3.start()
 
     def shutdown(sig, frame):
@@ -36,4 +44,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

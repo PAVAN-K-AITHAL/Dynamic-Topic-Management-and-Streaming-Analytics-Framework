@@ -1,5 +1,5 @@
 // API service for backend communication
-const ADMIN_BASE_URL = "http://10.147.19.93:5000";
+const ADMIN_BASE_URL = "http://localhost:5000";
 const POLL_INTERVAL = 5000; // 5 seconds
 
 // Register consumer on initialization (no longer needed with new API, but keeping for compatibility)
